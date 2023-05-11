@@ -8,5 +8,5 @@ import (
 func main() {
 	configs.ConnectDatabase()
 	e := routes.InitRoute()
-	e.Start(":8000")
+	e.Start(":800")
 }
