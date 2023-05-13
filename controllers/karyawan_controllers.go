@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"prakerja3/configs"
@@ -29,11 +30,12 @@ func GetKaryawanController(c echo.Context) error {
 func InsertKaryawanController(c echo.Context) error {
 	var insertKaryawan models.Karyawan
 	c.Bind(&insertKaryawan)
+	fmt.Println(insertKaryawan)
 
 	//logic bisnis
 	//cek database sudah data sudah ada
 	//409
-	result := configs.DB.First(&models.Karyawan{}, "email = ", insertKaryawan.Email)
+	result := configs.DB.First(&models.Karyawan{}, "email = ?", insertKaryawan.Email)
 	if result.Error != gorm.ErrRecordNotFound {
 		return c.JSON(http.StatusConflict, models.BaseResponse{
 			Status: false, Message: "Email telah digunakan !!", Data: nil,
